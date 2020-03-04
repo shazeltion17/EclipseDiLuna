@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Party</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+      <h2>{{user}}</h2>
+      {% if user.is_superuser %}
+        <h2><a href="{% url 'staff_order' user Order_number%}">Order Manager</a></h2>
+      {% else %}
+        <h2><a href="{% url 'myOrders' Order_number%}">My Orders</a></h2>
+      {% endif %}
+      <h2><a href="{% url 'logout'%}" >Logout</a></h2>
+
+    {% endif %}
+
+    {%block content%}
+
+    {% endblock %}
+
+</body>
+</html>

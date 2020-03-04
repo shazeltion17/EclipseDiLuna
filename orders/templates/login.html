@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Login</h1>
+{%if message %}
+   {{message}}
+{% endif %}
+
+<form action="{% url 'login'%}" method="POST">
+    {% csrf_token %}
+    <label for="username">Username:</label><br>
+    <input type="text" name="usernameABC"><br>
+
+    <label for="pwd">Password</label><br>
+    <input type="text" name="password"><br>
+    
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Or <a href="{% url 'register'%}">Register</a></h3>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<h2>All Orders</h2>
+
+<ul>
+    {% for item in All_orders%} 
+    <li>
+        Order Number:<a href="{% url 'staff_order' item.user item.order_number%}">{{item.order_number}}</a> --User:{{item.user}}--- Status: {{item.status}}
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% if Status != 'initiated'%}
+<h2>Order Number {{Order_number}}</h2>
+<h3>Status:{{Status}}</h3> 
+{% for item in Checkout %}
+  <p>{{item}} </p>
+{% endfor %}
+<h3>Total: {{Total}}</h3>
+
+{% if Status == 'pending'%}
+<h2><a href="{% url 'complete_order' user Order_number%}">Complete order</a></h2>
+{%endif%}
+
+{%endif%}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+    <h2>Pizzas</h2>
+    {%for pizza in pizzas%}
+    <p>{{pizza.name}} - {{pizza.get_style_display}} - {{pizza.get_size_display}} -- {{pizza.price}}
+        <a href="{% url 'add' pizza.name pizza.price %}">Add</a>
+    </p>
+    {% endfor %}
+
+    <h2>Pastas</h2>
+    {%for pasta in pastas%}
+    <p>{{pasta.name}} -- {{pasta.price}} <a href="{% url 'add' pasta.name pasta.price %}">Add</a></p>    
+    {% endfor %}
+
+    <h1>My Cart( {{user}})</h1>
+    <h3>Order Number:{{Order_number}}</h3>
+    {% for item in Checkout %}
+    <p>{{item}}  <a href="{% url 'delete' item.name item.price %}">Remove</a></p>
+    {% endfor %}
+    <h3>Total: {{Total}}</h3>
+    <h2><a href="{% url 'myOrders' Order_number%}">Place Order</a></h2>
+
+</body>
+</html>
+
+{% endblock %}

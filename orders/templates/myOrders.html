@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<h2>My Orders</h2>
+{% for item in All_my_orders%}
+{% if item.status != 'initiated'%}
+<p>Order Number:<a href="{% url 'myOrders' item.order_number%}">{{item.order_number}}</a> --- Status: {{item.status}}</p>
+{% endif %}
+{% endfor %}
+
+<h2>Order Number {{Order_number}}</h2>
+<h3>Status:{{Status}}</h3> 
+{% for item in Checkout %}
+  <p>{{item}} </p>
+{% endfor %}
+<h3>Total: {{Total}}</h3>
+
+{% if Status == 'initiated'%}
+<h2><a href="{% url 'confirmOrder' Order_number%}">Confirm order</a></h2>
+{%endif%}
+
+{% endblock %}
