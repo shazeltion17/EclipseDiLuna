@@ -2,25 +2,84 @@
 
 {% block content%}
 
-    <h2>Pizzas</h2>
-    {%for pizza in pizzas%}
-    <p>{{pizza.name}} - {{pizza.get_style_display}} - {{pizza.get_size_display}} -- {{pizza.price}}
-        <a href="{% url 'add' pizza.name pizza.price %}">Add</a>
-    </p>
-    {% endfor %}
 
-    <h2>Pastas</h2>
-    {%for pasta in pastas%}
-    <p>{{pasta.name}} -- {{pasta.price}} <a href="{% url 'add' pasta.name pasta.price %}">Add</a></p>    
-    {% endfor %}
+<div class="container-fluid pt-3">
+    <div class="row">
 
-    <h1>My Cart( {{user}})</h1>
-    <h3>Order Number:{{Order_number}}</h3>
-    {% for item in Checkout %}
-    <p>{{item}}  <a href="{% url 'delete' item.name item.price %}">Remove</a></p>
-    {% endfor %}
-    <h3>Total: {{Total}}</h3>
-    <h2><a href="{% url 'myOrders' Order_number%}">Place Order</a></h2>
+        <div class="col-9 text-center ">
+
+            <div class="back_col p-2" >
+
+                <h1>Menu</h1>
+            <hr>
+            <h2>Pizzas</h2>
+            {%for pizza in pizzas%}
+            <p>{{pizza.name}} - {{pizza.get_style_display}} - {{pizza.get_size_display}} -- ${{pizza.price}}
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' pizza.name pizza.price %}" >Add</a></button>  
+            </p>
+            {% endfor %}
+    
+            <h2 id="pasta">Pastas</h2>
+            {%for pasta in pastas%}
+            <p>{{pasta.name}} -- {{pasta.price}} 
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' pasta.name pasta.price %}">Add</a></button>
+            </p>  
+            {% endfor %}
+
+            <h2>Subs</h2>
+            {%for sub in subs%}
+            <p>{{sub.name}} - {{sub.get_size_display}} -- ${{sub.price}}
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' sub.name sub.price %}" >Add</a></button>  
+            </p>
+            {% endfor %}
+
+            <h2>Salads</h2>
+            {%for salad in salads%}
+            <p>{{salad.name}} -- {{salad.price}} 
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' salad.name salad.price %}">Add</a></button>
+            </p>  
+            {% endfor %}
+
+            <h2>Dinner Platters</h2>
+            {%for dp in dinner_platters%}
+            <p>{{dp.name}} -- {{dp.price}} 
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' dp.name dp.price %}">Add</a></button>
+            </p>  
+            {% endfor %}
+
+            </div>
+    
+
+        </div>
+
+        <div class="col-3 pl-5">
+
+                {% if user.is_authenticated %}
+              
+                <div class="bg-light p-4 border rounded position-fixed">
+
+                    <h1>My Cart({{user}})</h1>
+                    <h5>Order Number:{{Order_number}}</h5>
+                    <div class="border rounded m-2"></div>
+    
+                    {% for item in Checkout %}
+                        <p>{{item}} <button type="button" class="btn btn-outline-primary" > <a href="{% url 'delete' item.name item.price %}">Remove</a></button></p>
+                    {% endfor %}
+                    <hr>
+                    <h3>Total: {{Total}}</h3>
+                    <hr>
+                    <h2 class="text-center"><a href="{% url 'myOrders' Order_number%}">Place Order</a></h2>
+
+                </div>
+                
+                {% endif %}
+
+        </div>
+
+    </div>
+   
+
+</div>
 
 </body>
 </html>

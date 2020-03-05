@@ -2,29 +2,65 @@
 
 {% block content%}
 
-<h2>All Orders</h2>
+<div class="container-fluid pt-3">
+  <div class="row">
 
-<ul>
-    {% for item in All_orders%} 
-    <li>
-        Order Number:<a href="{% url 'staff_order' item.user item.order_number%}">{{item.order_number}}</a> --User:{{item.user}}--- Status: {{item.status}}
-    </li>
-    {% endfor %}
-</ul>
+      <div class="col-9 text-center">
+
+        <div class="back_col p-2">
+          <h1>All Orders</h1>
+          <hr>
+
+      {% for item in All_orders%}
 
 
-{% if Status != 'initiated'%}
-<h2>Order Number {{Order_number}}</h2>
-<h3>Status:{{Status}}</h3> 
-{% for item in Checkout %}
-  <p>{{item}} </p>
-{% endfor %}
-<h3>Total: {{Total}}</h3>
+        <p>Order Number: {{item.order_number}}            ---  by user:{{item.user}}  ---  Status: {{item.status}}   
+        <button type="button" class="btn btn-outline-primary" > <a href="{% url 'staff_order' item.user item.order_number%}">Detail</a></button>
+      </p>
+      
+      {% endfor %}
 
-{% if Status == 'pending'%}
-<h2><a href="{% url 'complete_order' user Order_number%}">Complete order</a></h2>
-{%endif%}
+        </div>
+        
 
-{%endif%}
+      </div>
+
+      <div class="col-3 pl-5 ">
+
+              {% if user.is_authenticated %}
+
+              <div class="bg-light p-4 border rounded position-fixed">
+
+              {% if Status != 'initiated'%}
+            
+              <h1>Order Detail</h1>
+              <hr>
+              <h5>Order Number:{{Order_number}}</h5>
+              <h5>Status:{{Status}}</h5>
+              <div class="border rounded m-2"></div>
+
+              {% for item in Checkout %}
+                  <p>{{item}} </p>
+              {% endfor %}
+              <hr>
+              <h3>Total: {{Total}}</h3>
+              <hr>
+              {% if Status == 'pending'%}
+              <h2 class="text-center"><a href="{% url 'complete_order' user Order_number%}">Complete Order</a></h2>
+              {% endif %}
+              {% endif %}
+
+              </div>
+
+
+              {% endif %}
+
+      </div>
+
+  </div>
+ 
+
+</div>
+
 
 {% endblock %}

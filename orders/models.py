@@ -17,17 +17,41 @@ class Pizza(models.Model):
     name=models.CharField(max_length=64)
     style = models.CharField(max_length=10, choices=STYLES)
     size = models.CharField(max_length=10, choices=SIZES)
-    price = models.DecimalField(max_digits=4,decimal_places=2)
+    price = models.DecimalField(max_digits=6,decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} - {self.style[1]} -{self.size} - {self.price}"
+        return f"{self.name} - {self.style} -{self.size} - {self.price}"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=4,decimal_places=2)
+    price = models.DecimalField(max_digits=6,decimal_places=2)
 
     def __str__(self):
         return f"{self.name} - {self.price}"
+
+
+class Salad(models.Model):
+    name = models.CharField(max_length=40)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.name} - {self.price}"
+
+class DinnerPlatter(models.Model):
+    name = models.CharField(max_length=40)
+    size = models.CharField(max_length=10, choices= SIZES)
+    price = models.DecimalField( max_digits=6, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.name} - {self.get_size_display()} - {self.price}"
+
+class Sub(models.Model):
+    name = models.CharField(max_length=40)
+    size = models.CharField(max_length=10, choices=SIZES)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+            return f"{self.name} - {self.get_size_display()} - $ {self.price}"
 
 class Order_counter(models.Model):
     counter=models.IntegerField()
@@ -47,7 +71,7 @@ class Cart(models.Model):
     user =models.ForeignKey(User,on_delete=models.CASCADE)
     number=models.IntegerField()
     name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=4,decimal_places=2)
+    price = models.DecimalField(max_digits=7,decimal_places=2)
 
     def __str__(self):
         return f"{self.name} - ${self.price} "

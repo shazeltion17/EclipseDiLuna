@@ -1,22 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Login</h1>
+
+<div class="container pt-3 back_col mt-3 pb-3">
+    
+<div class="text-center"> <h1>Login</h1></div>
+   
+<hr>
+
 {%if message %}
-   {{message}}
+<div class="alert alert-warning alert-dismissible fade show text-centre ">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+   
 {% endif %}
+
 
 <form action="{% url 'login'%}" method="POST">
     {% csrf_token %}
-    <label for="username">Username:</label><br>
-    <input type="text" name="usernameABC"><br>
-
-    <label for="pwd">Password</label><br>
-    <input type="text" name="password"><br>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" placeholder="Enter username" name="username">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" placeholder="Enter password" name="password">
+    </div>
     
-    <input type="submit" value="Submit">
-</form>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+<br>
 
 <h3>Or <a href="{% url 'register'%}">Register</a></h3>
+
+</div>
+
+
 
 {% endblock %}

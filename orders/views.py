@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Pizza, Pasta, Order_counter,User_order,Cart
+from .models import Pizza, Pasta, Order_counter,User_order,Cart, Sub, DinnerPlatter, Salad
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
@@ -30,7 +30,10 @@ def index(request):
         "Order_number":order_number,
         "user":request.user,
         "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all()
+        "pastas":Pasta.objects.all(),
+        "subs":Sub.objects.all(),
+        "salads":Salad.objects.all(),
+        "dinner_platters":DinnerPlatter.objects.all()
     }
 
     return render(request,"index.html",context)
@@ -59,7 +62,7 @@ def register(request):
 def loginView(request):
     
     if request.method=="POST":
-      username=request.POST["usernameABC"]
+      username=request.POST["username"]
       password=request.POST["password"]
       user=authenticate(request,username=username,password=password)
       if user is not None:
@@ -86,7 +89,10 @@ def add(request,name,price):
         "Order_number":order_number,
         "user":request.user,
         "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all()
+        "pastas":Pasta.objects.all(),
+        "subs":Sub.objects.all(),
+        "salads":Salad.objects.all(),
+        "dinner_platters":DinnerPlatter.objects.all()
     }
 
     return render(request,"index.html",context)
@@ -103,7 +109,10 @@ def deleteView(request,name,price):
         "Order_number":order_number,
         "user":request.user,
         "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all()
+        "pastas":Pasta.objects.all(),
+        "subs":Sub.objects.all(),
+        "salads":Salad.objects.all(),
+        "dinner_platters":DinnerPlatter.objects.all()
     }
 
     return render(request,"index.html",context)

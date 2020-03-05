@@ -2,22 +2,60 @@
 
 {% block content%}
 
-<h2>My Orders</h2>
-{% for item in All_my_orders%}
-{% if item.status != 'initiated'%}
-<p>Order Number:<a href="{% url 'myOrders' item.order_number%}">{{item.order_number}}</a> --- Status: {{item.status}}</p>
-{% endif %}
-{% endfor %}
+<div class="container-fluid pt-3">
+  <div class="row">
 
-<h2>Order Number {{Order_number}}</h2>
-<h3>Status:{{Status}}</h3> 
-{% for item in Checkout %}
-  <p>{{item}} </p>
-{% endfor %}
-<h3>Total: {{Total}}</h3>
+      <div class="col-9 text-center">
 
-{% if Status == 'initiated'%}
-<h2><a href="{% url 'confirmOrder' Order_number%}">Confirm order</a></h2>
-{%endif%}
+        <div class="back_col p-2">
+
+          <h1>My Orders</h1>
+            <hr>
+
+        {% for item in All_my_orders%}
+
+          <p>Order Number: {{item.order_number}} --- Status: {{item.status}}
+          <button type="button" class="btn btn-outline-primary" > <a href="{% url 'myOrders' item.order_number%}">Detail</a></button>
+        </p>
+        
+        {% endfor %}
+
+      </div>
+
+        </div>
+        
+
+      <div class="col-3 pl-5 ">
+
+              {% if user.is_authenticated %}
+
+              <div class="bg-light p-4 border rounded position-fixed">
+            
+              <h1>Order Detail</h1>
+              <hr>
+              <h5>Order Number:{{Order_number}}</h5>
+              <h5>Status:{{Status}}</h5>
+              <div class="border rounded m-2"></div>
+
+              {% for item in Checkout %}
+                  <p>{{item}} </p>
+              {% endfor %}
+              <hr>
+              <h3>Total: {{Total}}</h3>
+              <hr>
+              {% if Status == 'initiated'%}
+              <h2 class="text-center"><a href="{% url 'confirmOrder' Order_number%}">Confirm Order</a></h2>
+              {% endif %}
+
+              </div>
+              {% endif %}
+
+      </div>
+
+  </div>
+ 
+
+</div>
+
 
 {% endblock %}
