@@ -11,3 +11,8 @@ Viewing Orders: Site administrators have access to a Order Manager page where th
 Completing Orders: Site administrators can also mark the pending orders as complete in the Order Manager page
 
 ![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-34-40.png)
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-35-30.png)
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-37-11.png)
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-38-23.png)
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-39-20.png)
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-40-29.png)
