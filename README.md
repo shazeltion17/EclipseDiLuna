@@ -10,3 +10,4 @@ Placing an Order: Once there is at least one item in a user’s shopping cart, t
 Viewing Orders: Site administrators have access to a Order Manager page where they can view any orders that have already been placed and completed orders.
 Completing Orders: Site administrators can also mark the pending orders as complete in the Order Manager page
 
+![Screenshot](https://github.com/Mrid02/Food-Ordering-Website/blob/master/Screenshot%20from%202020-03-06%2000-34-40.png)
