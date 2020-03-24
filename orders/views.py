@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Pizza, Pasta, Order_counter,User_order,Cart, Sub, DinnerPlatter, Salad
+from .models import menu_items, Order_counter,User_order,Cart
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
@@ -22,18 +22,16 @@ if counter==None:
 def index(request):
   
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message":None})
-    order_number=User_order.objects.get(user=request.user,status='initiated').order_number
+        return render(request, "deliver.html", {"message": None})
+    order_number=User_order.objects.get(user=request.user, status='initiated').order_number
+    print(menu_items.objects.all())
     context = {
-        "Checkout":Cart.objects.filter(user=request.user,number=order_number),
-        "Total":list(Cart.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
-        "Order_number":order_number,
-        "user":request.user,
-        "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all(),
-        "subs":Sub.objects.all(),
-        "salads":Salad.objects.all(),
-        "dinner_platters":DinnerPlatter.objects.all()
+        "Checkout":Cart.objects.filter(user=request.user, number=order_number),
+        "Total": list(Cart.objects.filter(user=request.user, number=order_number).aggregate(Sum('price')).values())[0],
+        "Order_number": order_number,
+        "user": request.user,
+        "menu_items": menu_items.objects.all(),
+
     }
 
     return render(request,"index.html",context)
@@ -45,9 +43,9 @@ def register(request):
         password2=request.POST["password2"]
 
         if password != password2:
-            return render(request,"register.html",{"message":"Passwords donot match"})
+            return render(request, "register.html", {"message": "Passwords do not match"})
 
-        user = User.objects.create_user(username=username,password=password)
+        user = User.objects.create_user(username=username, password=password)
         user.save()
         counter = Order_counter.objects.first()
         order_number = User_order(user=user,order_number=counter.counter)
@@ -61,41 +59,43 @@ def register(request):
 
 def loginView(request):
     
-    if request.method=="POST":
-      username=request.POST["username"]
-      password=request.POST["password"]
-      user=authenticate(request,username=username,password=password)
-      if user is not None:
-          login(request,user)
-          return HttpResponseRedirect(reverse("index"))
-      else:
-          return render(request,"login.html",{"message":"Invalid credentials"}) 
-    return render(request,"login.html") 
-   
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+          login(request, user)
+          return  HttpResponseRedirect(reverse("index"))
+        else:
+          return render(request, "login.html", {"message": "Invalid credentials"})
+    return render(request, "login.html")
+
+
+def deliver(request):
+    print(request.POST)
+    return render(request,"deliver.html")
+
 
 def logoutView(request):
     logout(request)
     return render(request,"login.html",{"message":"Logged out."})
 
-def add(request,name,price):
-    order_number = User_order.objects.get(user=request.user,status='initiated').order_number
 
-    add = Cart(user=request.user,number=order_number,name=name,price=price)
+def add(request, name, price):
+    order_number = User_order.objects.get(user=request.user, status='initiated').order_number
+
+    add = Cart(user=request.user, number=order_number, name=name, price=price)
     add.save()
 
     context = {
-        "Checkout":Cart.objects.filter(user=request.user,number=order_number),
-        "Total":list(Cart.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
-        "Order_number":order_number,
-        "user":request.user,
-        "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all(),
-        "subs":Sub.objects.all(),
-        "salads":Salad.objects.all(),
-        "dinner_platters":DinnerPlatter.objects.all()
+        "Checkout": Cart.objects.filter(user=request.user, number=order_number),
+        "Total": list(Cart.objects.filter(user=request.user, number=order_number).aggregate(Sum('price')).values())[0],
+        "Order_number": order_number,
+        "user": request.user,
+        "menu_items": menu_items.objects.all(),
     }
 
-    return render(request,"index.html",context)
+    return render(request, "index.html", context)
 
 def deleteView(request,name,price):
     order_number = User_order.objects.get(user=request.user,status='initiated').order_number
@@ -108,11 +108,7 @@ def deleteView(request,name,price):
         "Total":list(Cart.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
         "Order_number":order_number,
         "user":request.user,
-        "pizzas":Pizza.objects.all(),
-        "pastas":Pasta.objects.all(),
-        "subs":Sub.objects.all(),
-        "salads":Salad.objects.all(),
-        "dinner_platters":DinnerPlatter.objects.all()
+        "menu_items":menu_items.objects.all(),
     }
 
     return render(request,"index.html",context)

@@ -1,7 +1,42 @@
+.bg-dark {
+    background-color: #261d00!important;
+
+}
+
+
 .back_col{
 
-    background-color: rgba(250, 250, 250 ,0.7);
-
+    background-color: rgba(250, 250, 250 ,.7);
+    margin: 10px;
     color: black;
 }
 
+.loginhead {
+    width: 27.5%;
+}
+
+.col-sm {
+        align-self: flex-end;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+        transform-origin: bottom;
+        width: 50px;
+        padding: 10px;
+}
+
+.bounce-1 {
+        animation-name: bounce-1;
+        animation-timing-function: ease;
+    }
+    @keyframes bounce-1 {
+        0%   { transform: translateY(0); }
+        50%  { transform: translateY(-100px); }
+        100% { transform: translateY(0); }
+    }
+.container2 {
+
+}
+
+#cart-header-1 {
+    font-size: 10px;
+}

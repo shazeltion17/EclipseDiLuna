@@ -13,4 +13,5 @@ urlpatterns = [
     path("my_orders/<str:order_number>", views.myOrders, name="myOrders"),
     path("staff_order/<str:user>/<str:order_number>", views.staff_order, name="staff_order"),
     path("complete_order/<str:user>/<str:order_number>", views.complete_order, name="complete_order"),
+    path("deliver", views.deliver, name="deliver"),
 ]

@@ -12,35 +12,22 @@
 
                 <h1>Menu</h1>
             <hr>
-            <h2>Pizzas</h2>
-            {%for pizza in pizzas%}
-            <p>{{pizza.name}} - {{pizza.get_style_display}} - {{pizza.get_size_display}} -- ${{pizza.price}}
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' pizza.name pizza.price %}" >Add</a></button>  
-            </p>
-            {% endfor %}
-    
-            <h2 id="pasta">Pastas</h2>
-            {%for pasta in pastas%}
-            <p>{{pasta.name}} -- {{pasta.price}} 
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' pasta.name pasta.price %}">Add</a></button>
-            </p>  
-            {% endfor %}
-
-            <h2>Subs</h2>
-            {%for sub in subs%}
-            <p>{{sub.name}} - {{sub.get_size_display}} -- ${{sub.price}}
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' sub.name sub.price %}" >Add</a></button>  
+            <h2>Starters</h2>
+            {%for menu_item in menu_items%}
+            <p><img src="/static/Images/{{ menu_item.img_location }}" height="15%" width="15%">
+                {{menu_item.name}} - ${{menu_item.price}}
+            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' menu_item.name menu_item.price %}" >Add</a></button>
             </p>
             {% endfor %}
 
-            <h2>Salads</h2>
+            <h2>Entres</h2>
             {%for salad in salads%}
             <p>{{salad.name}} -- {{salad.price}} 
             <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' salad.name salad.price %}">Add</a></button>
             </p>  
             {% endfor %}
 
-            <h2>Dinner Platters</h2>
+            <h2>Family Style</h2>
             {%for dp in dinner_platters%}
             <p>{{dp.name}} -- {{dp.price}} 
             <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' dp.name dp.price %}">Add</a></button>
@@ -52,13 +39,11 @@
 
         </div>
 
-        <div class="col-3 pl-5">
-
                 {% if user.is_authenticated %}
               
-                <div class="bg-light p-4 border rounded position-fixed">
+                <div class="bg-light p-4 border rounded">
 
-                    <h1>My Cart({{user}})</h1>
+                    <h1 id="cart-header-1">My Cart ({{user}})</h1>
                     <h5>Order Number:{{Order_number}}</h5>
                     <div class="border rounded m-2"></div>
     
@@ -75,9 +60,6 @@
                 {% endif %}
 
         </div>
-
-    </div>
-   
 
 </div>
 
