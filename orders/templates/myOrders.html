@@ -1,61 +1,90 @@
 {% extends "base.html" %}
 
-{% block content%}
+{% block content %}
 
-<div class="container-fluid pt-3">
-  <div class="row">
 
-      <div class="col-9 text-center">
-
-        <div class="back_col p-2">
-
-          <h1>My Orders</h1>
-            <hr>
-
-        {% for item in All_my_orders%}
-
-          <p>Order Number: {{item.order_number}} --- Status: {{item.status}}
-          <button type="button" class="btn btn-outline-primary" > <a href="{% url 'myOrders' item.order_number%}">Detail</a></button>
-        </p>
-        
-        {% endfor %}
-
-      </div>
+    <div class="row">
+        <div class="cart-items col-12 col-sm-9">
+            <div class="col-12 back_col">
+                <h1>My Order</h1>
+                <hr>
+                <div class="align-items-center">
+                    <ul>
+                        {% for item in Checkout %}
+                            <li style="list-style: none">
+                            <div class="row align-items-center">
+                            <div class="col-12 col-sm-4 p-1">
+                                <img id="menu_item_images" src="/static/Images/{{ item.img_location }}" height="auto"
+                                     width="auto">
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <p>{{ item.name }}</p>
+                                <p class="small"></p>
+                                <p>${{ item.price }}</p>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <a href="{% url 'delete' item.name item.price %}"><img
+                                        src="/static/Images/png/cancel-button.png" height="30px" width="30px"></a>
+                            </div>
+                        {% endfor %}
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
-        
 
-      <div class="col-3 pl-5 ">
+        {% if user.is_authenticated %}
+            <div id="cart-1" class="col-12 col-sm-3 bg-light border rounded">
+                <div class="menu-col-content pt-2">
+                    <h1 id="cart-header-1">My Cart ({{ user }})</h1>
+                    <h5>Number of Items: {{ item_count }}</h5>
+                    <hr>
+                </div>
+                <div id="app">
+                    <div class="row" id="sub total">
+                        <p class="col">Sub Total</p>
+                        <p class="col">{{ Total.sub_total }}</p>
+                    </div>
+                    <hr>
+                    <div class="row" id="tax">
+                        <p class="col">Tax:</p>
+                        <p class="col">{{ Total.tax }}</p>
+                    </div>
+                    <hr>
+                    <div class="row ml-1 align-center" id="Tip">
+                        <p class="col-2" style="margin: auto">Tip</p>
+                        <input v-model.number="tip_amount" id="coupon-code" type="number" required="required"
+                               placeholder="Enter Tip Amount"
+                               aria-required="true" value="" class="form-control col-4 offset-md-1">
+                        <button v-on:click="addTip" type="button" class="btn btn-primary col-4 offset-md-1">Apply
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <p class="col">Total: </p>
+                        <p class="col" id="text_total">{{ Total.final_total }}</p>
+                    </div>
+                                        </div>
+                    <hr>
+                    <div class="pb-1">
+                        <form action="{% url 'confirmOrder'%}"method="post">
+                            {% csrf_token %}
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="pk_test_TQmy1LFbeJ6tgZLOdzT4pZRh00mJ3yq97c"
+                                    data-description="A Flask Charge"
+                                    data-amount="{{ total.final_total }}"
+                                    data-email="{{ email }}"
+                                    data-locale="auto">
+                            </script>
+                        </form>
+                </div>
+            </div>
+        {% endif %}
 
-              {% if user.is_authenticated %}
-
-              <div class="bg-light p-4 border rounded position-fixed">
-            
-              <h1>Order Detail</h1>
-              <hr>
-              <h5>Order Number:{{Order_number}}</h5>
-              <h5>Status:{{Status}}</h5>
-              <div class="border rounded m-2"></div>
-
-              {% for item in Checkout %}
-                  <p>{{item}} </p>
-              {% endfor %}
-              <hr>
-              <h3>Total: {{Total}}</h3>
-              <hr>
-              {% if Status == 'initiated'%}
-              <h2 class="text-center"><a href="{% url 'confirmOrder' Order_number%}">Confirm Order</a></h2>
-              {% endif %}
-
-              </div>
-              {% endif %}
-
-      </div>
-
-  </div>
- 
-
-</div>
-
-
+    </div>
+    {% if order_confirm %}
+        {{ order_confirm }}
+    {% endif %}
 {% endblock %}

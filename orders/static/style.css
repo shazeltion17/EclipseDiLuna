@@ -3,40 +3,54 @@
 
 }
 
-
 .back_col{
 
     background-color: rgba(250, 250, 250 ,.7);
-    margin: 10px;
     color: black;
 }
 
-.loginhead {
-    width: 27.5%;
-}
-
-.col-sm {
-        align-self: flex-end;
-        animation-duration: 2s;
-        animation-iteration-count: 1;
-        transform-origin: bottom;
-        width: 50px;
-        padding: 10px;
+.menu-col-content {
+    text-align: center;
 }
 
 .bounce-1 {
         animation-name: bounce-1;
         animation-timing-function: ease;
     }
+
     @keyframes bounce-1 {
         0%   { transform: translateY(0); }
         50%  { transform: translateY(-100px); }
         100% { transform: translateY(0); }
     }
-.container2 {
 
+.cart-items {
+    font-family: gotham-narrow,sans-serif;
+    font-size: 35px;
 }
 
 #cart-header-1 {
     font-size: 10px;
+}
+
+.dbl-underline {
+    padding-bottom: 4px!important;
+    position: relative;
+}
+
+#menu_item_images {
+    border-radius: 25px;
+    height: auto;
+    width: auto;
+}
+
+.dividers {
+    animation-duration: 2s;
+    margin: 25%;
+}
+
+.inside-dividers {
+    padding: 5%;
+    margin: 10px;
+    border-style: wave;
 }

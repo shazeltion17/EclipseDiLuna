@@ -2,68 +2,66 @@
 
 {% block content%}
 
-
-<div class="container-fluid pt-3">
     <div class="row">
 
-        <div class="col-9 text-center ">
+        <div class="col-12 col-sm-9 text-center  back_col">
 
-            <div class="back_col p-2" >
-
-                <h1>Menu</h1>
+            <h1>Menu</h1>
             <hr>
-            <h2>Starters</h2>
+            <h2 class="dbl-underline">Starters</h2>
             {%for menu_item in menu_items%}
-            <p><img src="/static/Images/{{ menu_item.img_location }}" height="15%" width="15%">
-                {{menu_item.name}} - ${{menu_item.price}}
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' menu_item.name menu_item.price %}" >Add</a></button>
-            </p>
+                <div class="row">
+                <p class="col-8" ><img id="menu_item_images" src="/static/Images/{{ menu_item.img_location }}" height="15%" width="15%">
+                    {{menu_item.name}} - ${{menu_item.price}}
+                </p>
+                    <form class="col-4" action="{% url 'add' %}" method="POST" style="margin: auto">
+                        {% csrf_token %}
+                        <input type="hidden" name="menu_item" value="{{ menu_item.name }}">
+                        <input type="hidden" name="menu_item_price" value="{{ menu_item.price }}">
+                        <button type="submit" class="btn btn-outline-primary">Add</button>
+                    </form>
+                </div>
             {% endfor %}
 
             <h2>Entres</h2>
             {%for salad in salads%}
-            <p>{{salad.name}} -- {{salad.price}} 
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' salad.name salad.price %}">Add</a></button>
-            </p>  
+                <p>{{salad.name}} -- {{salad.price}}
+                    <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' salad.name salad.price %}">Add</a></button>
+                </p>
             {% endfor %}
 
             <h2>Family Style</h2>
             {%for dp in dinner_platters%}
-            <p>{{dp.name}} -- {{dp.price}} 
-            <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' dp.name dp.price %}">Add</a></button>
-            </p>  
+                <p>{{dp.name}} -- {{dp.price}}
+                    <button type="button" class="btn btn-outline-primary" > <a href="{% url 'add' dp.name dp.price %}">Add</a></button>
+                </p>
             {% endfor %}
-
-            </div>
-    
-
         </div>
+        {% if user.is_authenticated %}
+        <div v-if="seen" id="cart-1" class="col-12 col-sm-3 bg-light border rounded menu-col-content">
 
-                {% if user.is_authenticated %}
-              
-                <div class="bg-light p-4 border rounded">
+                <h1 id="cart-header-1">My Cart ({{user}})</h1>
+                <h5>Number of Items: {{item_count}}</h5>
+                <div class="border rounded m-2"></div>
 
-                    <h1 id="cart-header-1">My Cart ({{user}})</h1>
-                    <h5>Order Number:{{Order_number}}</h5>
-                    <div class="border rounded m-2"></div>
-    
-                    {% for item in Checkout %}
-                        <p>{{item}} <button type="button" class="btn btn-outline-primary" > <a href="{% url 'delete' item.name item.price %}">Remove</a></button></p>
-                    {% endfor %}
-                    <hr>
-                    <h3>Total: {{Total}}</h3>
-                    <hr>
-                    <h2 class="text-center"><a href="{% url 'myOrders' Order_number%}">Place Order</a></h2>
-
+                {% for item in Checkout %}
+                    <p>{{item}} <button type="button" class="btn btn-outline-primary" > <a href="{% url 'delete' item.name item.price %}">Remove</a></button></p>
+                {% endfor %}
+                <hr>
+                <h3>Total: {{Total.sub_total}}</h3>
+                <hr>
+                <div class="pb-1">
+                    <form action="{% url 'myOrders'%}" method="POST">
+                        {% csrf_token %}
+                        <button style="width: 100%;" type="submit" class="btn btn-primary">Confirm Order</button>
+                    </form>
                 </div>
-                
-                {% endif %}
+
 
         </div>
+        {% endif %}
 
-</div>
+    </div>
 
-</body>
-</html>
 
 {% endblock %}

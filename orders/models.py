@@ -30,8 +30,9 @@ class Order_counter(models.Model):
 
 class User_order(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    order_number=models.IntegerField()
-    status=models.CharField(max_length=64,default='initiated')
+    order_number = models.IntegerField()
+    status=models.CharField(max_length=64, default='initiated')
+    order_confirmation = models.CharField(max_length=64, default='something')
 
     def __str__(self):
         return f"{self.user} - {self.order_number} - {self.status}"
@@ -44,3 +45,15 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"{self.name} - ${self.price} "
+
+
+class OrderDetails(models.Model):
+    number = models.IntegerField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    img_location = models.CharField(max_length=64)
+
+    class Meta:
+        managed = False
+        db_table = "order_details2"
+    def __str__(self):
+        return "test"
